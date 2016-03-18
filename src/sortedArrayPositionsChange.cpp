@@ -15,5 +15,19 @@ NOTES:
 
 void * sortedArrayPositionsChange(int *Arr, int len)
 {
-	return NULL;
+	int pos[2], iter, iter2 = 0;
+	if (Arr == NULL || len < 0)	return  NULL;
+	//find the two wrong positions.
+	for (iter = 0; iter < len - 1; iter++){
+		if (Arr[iter]>Arr[iter + 1]){
+			pos[iter2] = iter + (iter2++);
+		}
+	}
+	//swapping
+	if (pos[0] != pos[1]){
+		iter = Arr[pos[0]];
+		Arr[pos[0]] = Arr[pos[1]];
+		Arr[pos[1]] = iter;
+	}
+	return Arr;
 }
