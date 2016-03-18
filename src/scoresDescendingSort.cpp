@@ -14,12 +14,40 @@ NOTES:
 */
 
 #include <stdio.h>
-
+#include<string.h>
 struct student {
 	char name[10];
 	int score;
 };
+void swap(struct student *st1, struct student *st2){
 
+	struct student st = *st1;
+	*st1 = *st2;
+	*st2 = st;
+
+}
+
+
+void sort1(struct student * arr, int first, int last){
+	int iter1, iter2, pivot;
+	if (first < last){
+		pivot = first;
+		iter1 = first;
+		iter2 = last;
+		while (iter1 < iter2){
+			while (arr[iter1].score >= arr[pivot].score && iter1 < last)
+				iter1++;
+			while (arr[iter2].score < arr[pivot].score && iter2>0)
+				iter2--;
+			if (iter1 < iter2){
+				swap(&arr[iter1], &arr[iter2]);
+			}
+		}
+		swap(&arr[pivot], &arr[iter2]);
+
+	}
+}
 void * scoresDescendingSort(struct student *students, int len) {
-	return NULL;
+	if (students == NULL || len<0) return NULL;
+	sort1(students, 0, len - 1);
 }

@@ -21,6 +21,39 @@ struct student {
 	int score;
 };
 
+void swap2(struct student *st1, struct student *st2){
+	struct student st = *st1;
+	*st1 = *st2;
+	*st2 = st;
+}
+
+
+void sort2(struct student * arr, int first, int last){
+	int iter1, iter2, pivot;
+	if (first < last){
+		pivot = first;
+		iter1 = first;
+		iter2 = last;
+		while (iter1 < iter2){
+			while (arr[iter1].score >= arr[pivot].score && iter1 < last)
+				iter1++;
+			while (arr[iter2].score < arr[pivot].score && iter2>0)
+				iter2--;
+			if (iter1 < iter2){
+				swap2(&arr[iter1], &arr[iter2]);
+			}
+		}
+		swap2(&arr[iter2], &arr[pivot]);
+		sort2(arr, first, iter2 - 1);
+		sort2(arr, iter2 + 1, last);
+	}
+}
 struct student ** topKStudents(struct student *students, int len, int K) {
-	return NULL;
+	if (students == NULL || K <= 0) return NULL;
+	struct student **topList = (struct student**)calloc(K, sizeof(struct student));
+	sort2(students, 0, len - 1);
+	while (K--){
+		topList[K] = &students[K];
+	}
+	return topList;
 }
